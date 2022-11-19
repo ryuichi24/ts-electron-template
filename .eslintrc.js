@@ -25,7 +25,7 @@ module.exports = {
   },
   plugins: ["react", "@typescript-eslint"],
   // https://eslint.org/docs/latest/user-guide/configuring/ignoring-code
-  ignorePatterns: ["**/generated/*ts"],
+  ignorePatterns: ["**/generated/*ts", "**/*.test.ts*", "**/*.config.*"],
   rules: {
     "react/react-in-jsx-scope": "off",
     "no-empty-pattern": "off",

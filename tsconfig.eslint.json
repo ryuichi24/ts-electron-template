@@ -5,6 +5,8 @@
     ".eslintrc.js",
     "postcss.config.js",
     "tailwind.config.js",
+    "jest.config.ts",
+    "electron-builder.config.js",
     "vite.config.mts"
   ]
 }
