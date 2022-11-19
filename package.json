@@ -6,22 +6,25 @@
   "scripts": {
     "dev": "node scripts/watch.mjs",
     "build": "npm run cleanup && npm run build:main && npm run build:preload",
-    "cleanup": "rimraf dist",
+    "cleanup": "rimraf dist release",
+    "dist": "npm run cleanup && npm run build && electron-builder --config electron-builder.config.js",
     "build:main": "vite build --config vite.config.mts",
     "build:preload": "vite build --config src/preload/vite.config.mts"
   },
   "keywords": [],
-  "author": "",
+  "author": {
+    "email": "ryuichi.nishi24@gmail.com",
+    "name": "Ryuichi Nishi",
+    "url": "https://github.com/ryuichi24"
+  },
   "license": "ISC",
   "devDependencies": {
     "@types/node": "18.11.9",
     "@types/react": "18.0.25",
     "@types/react-dom": "18.0.9",
     "@vitejs/plugin-react": "2.2.0",
-    "concurrently": "7.5.0",
     "electron": "21.3.0",
     "electron-builder": "23.6.0",
-    "electronmon": "2.0.2",
     "rimraf": "3.0.2",
     "typescript": "4.9.3",
     "vite": "3.2.4",
