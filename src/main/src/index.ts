@@ -7,18 +7,14 @@ if (require("electron-squirrel-startup")) {
 
 const isDev = !app.isPackaged;
 const isMac = process.platform === "darwin";
-const RENDERER_PORT = process.env.RENDERER_PORT || 3333;
-const rootSrcDir = path.dirname(path.dirname(__dirname));
-const preloadScriptPath = path.resolve(
-  rootSrcDir,
-  "preload",
-  "dist",
-  "index.cjs"
-);
+const rendererDevServerURL =
+  process.env.VITE_DEV_SERVER_URL || "http://localhost:7777";
+const rootDir = path.resolve(path.dirname(path.dirname(__dirname)));
+const preloadScriptPath = path.resolve(rootDir, "dist", "preload", "index.cjs");
 const rendererFilePath = path.resolve(
-  rootSrcDir,
-  "renderer",
+  rootDir,
   "dist",
+  "renderer",
   "index.html"
 );
 
@@ -39,7 +35,7 @@ function createMainWindow() {
 
   if (isDev) {
     mainWindow.webContents.openDevTools();
-    mainWindow.loadURL(`http://localhost:${RENDERER_PORT}`);
+    mainWindow.loadURL(rendererDevServerURL);
   } else {
     mainWindow.loadFile(rendererFilePath);
   }

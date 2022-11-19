@@ -7,7 +7,7 @@ npm install -E react react-dom electron-squirrel-startup
 ```
 
 ```bash
-npm install -DE typescript vite @vitejs/plugin-react @types/react @types/react-dom @types/node electron electron-builder electronmon rimraf concurrently
+npm install -DE typescript vite @vitejs/plugin-react @types/react @types/react-dom @types/node electron electron-builder electronmon rimraf concurrently vite-plugin-electron
 ```
 
 ```bash
