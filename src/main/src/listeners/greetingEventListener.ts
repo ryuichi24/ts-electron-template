@@ -1,4 +1,4 @@
-import { BrowserWindow } from "electron";
+import { BrowserWindow, dialog } from "electron";
 import {
   SayGoodByePayload,
   SayGoodByeResult,
@@ -8,15 +8,20 @@ import {
 import { ipcHandle } from "../utils/ipcHandle.js";
 
 export const initGreetingEventListener = (_window: BrowserWindow) => {
-  ipcHandle<SayHelloPayload, SayHelloResult>("SAY_HELLO", (event, payload) => {
-    console.log(payload);
-    return {};
-  });
+  ipcHandle<SayHelloPayload, SayHelloResult>(
+    "SAY_HELLO",
+    async (event, payload) => {
+      const greet = `Hello, ${payload.name}`;
+      await dialog.showMessageBox(_window, { message: greet });
+      return {};
+    }
+  );
 
   ipcHandle<SayGoodByePayload, SayGoodByeResult>(
     "SAY_GOOD_BYE",
-    (event, payload) => {
-      console.log(payload);
+    async (event, payload) => {
+      const greet = `Good Bye, ${payload.name}`;
+      await dialog.showMessageBox(_window, { message: greet });
       return {};
     }
   );
