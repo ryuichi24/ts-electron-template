@@ -5,10 +5,5 @@
     "moduleResolution": "NodeNext",
     "allowSyntheticDefaultImports": true
   },
-  "include": [
-    "src/main/src",
-    "src/preload/src",
-    "vite.config.mts", 
-    "src/preload/vite.config.mts"
-  ]
+  "include": ["src/main/src", "src/preload/src", "src/types", "vite.config.mts"]
 }

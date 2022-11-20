@@ -1,5 +1,6 @@
 import path from "path";
 import { BrowserWindow, app } from "electron";
+import { initGreetingEventListener } from "./listeners/greetingEventListener.js";
 
 if (require("electron-squirrel-startup")) {
   app.quit();
@@ -10,7 +11,7 @@ const isMac = process.platform === "darwin";
 const rendererDevServerURL =
   process.env.VITE_DEV_SERVER_URL || "http://localhost:7777";
 const rootDir = path.resolve(path.dirname(path.dirname(__dirname)));
-const preloadScriptPath = path.resolve(rootDir, "dist", "preload", "index.cjs");
+const preloadScriptPath = path.resolve(rootDir, "dist", "preload", "index.js");
 const rendererFilePath = path.resolve(
   rootDir,
   "dist",
@@ -38,6 +39,8 @@ async function main() {
   });
 
   mainWindow?.on("closed", () => (mainWindow = null));
+
+  initGreetingEventListener(mainWindow!);
 }
 
 main().catch(shutDown);
@@ -49,7 +52,7 @@ async function createMainWindow() {
     //   icon: `${__dirname}/assets/icons/Icon_256x256.png`,
     resizable: isDev,
     webPreferences: {
-      nodeIntegration: true,
+      nodeIntegration: false,
       contextIsolation: true,
       preload: preloadScriptPath,
     },

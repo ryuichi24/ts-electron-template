@@ -3,6 +3,8 @@ import { defineConfig } from "vite";
 import electron from "vite-plugin-electron";
 import react from "@vitejs/plugin-react";
 
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
+
 const electronEntryPath = path.resolve(
   __dirname,
   "src",
@@ -25,17 +27,29 @@ export default defineConfig({
   },
   plugins: [
     react({}),
-    electron({
-      entry: electronEntryPath,
-      vite: {
-        build: {
-          outDir: path.resolve(__dirname, "dist", "main"),
+    // https://github.com/electron-vite/vite-plugin-electron/issues/97
+    electron([
+      {
+        entry: electronEntryPath,
+        vite: {
+          build: {
+            outDir: path.resolve(__dirname, "dist", "main"),
+          },
+        },
+        onstart(this, { startup }) {
+          startup(["dist/main/index.js"]);
+          return;
         },
       },
-      onstart(this, { startup }) {
-        startup(["dist/main/index.js", "--no-sandbox"]);
-        return;
+      {
+        entry: path.join(__dirname, "src/preload/src/index.ts"),
+        vite: {
+          build: {
+            sourcemap: "inline",
+            outDir: path.resolve(__dirname, "dist", "preload")
+          },
+        },
       },
-    }),
+    ]),
   ],
 });
